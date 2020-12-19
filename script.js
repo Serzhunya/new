@@ -1,30 +1,29 @@
 /* Задание на урок:
 
-1) Создать переменную numberOfFilms и в неё поместить ответ от пользователя на вопрос:
-'Сколько фильмов вы уже посмотрели?'
+1) Первую часть задания повторить по уроку
 
-2) Создать объект personalMovieDB и в него поместить такие свойства:
-    - count - сюда передается ответ на первый вопрос
-    - movies - в это свойство поместить пустой объект
-    - actors - тоже поместить пустой объект
-    - genres - сюда поместить пустой массив
-    - privat - в это свойство поместить boolean(логическое) значение false
+2) Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции
+false - выводит в консоль главный объект программы
 
-3) Задайте пользователю по два раза вопросы:
-    - 'Один из последних просмотренных фильмов?'
-    - 'На сколько оцените его?'
-Ответы стоит поместить в отдельные переменные
-Записать ответы в объект movies в формате: 
-    movies: {
-        'logan': '8.1'
-    }
+3) Создать функцию writeYourGenres в которой пользователь будет 3 раза отвечать на вопрос 
+"Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных
+genres
 
-Проверить, чтобы все работало без ошибок в консоли */
-
+P.S. Функции вызывать не обязательно*/
 'use strict';
 
-const numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", '');
-//забыла поставить запятую в промпт
+
+let numberOfFilms;
+
+function showNumberFilms(){
+    numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", '');
+    while(numberOfFilms == null || numberOfFilms == "" || isNaN(numberOfFilms)){
+        numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", '');
+    }
+}
+
+showNumberFilms();
+
 const personalMovieDB = {
     count : numberOfFilms,
     movies : {
@@ -37,12 +36,64 @@ const personalMovieDB = {
     privat: false,
 };
 
-const lastFilm1 = prompt('Один из последних просмотренных фильмов?', '');
-const stars1 = +prompt('На сколько оцените его?', 'От 1 до 10');
-const lastFilm2 = prompt('Один из последних просмотренных фильмов?', '');
-const stars2 = +prompt('На сколько оцените его?', 'От 1 до 10');
+// const lastFilm1 = prompt('Один из последних просмотренных фильмов?', '');
+// const stars1 = +prompt('На сколько оцените его?', 'От 1 до 10');
+// const lastFilm2 = prompt('Один из последних просмотренных фильмов?', '');
+// const stars2 = +prompt('На сколько оцените его?', 'От 1 до 10');
 
-personalMovieDB.movies[lastFilm1]=stars1;
-personalMovieDB.movies[lastFilm2]=stars2;
+let lastFilm;
+let stars;
 
-console.log(personalMovieDB);
+for(let i = 0 ; i < 2 ; i++){
+    lastFilm = prompt('Один из последних просмотренных фильмов?', '');
+    stars = +prompt('На сколько оцените его?', 'От 1 до 10');
+    if(lastFilm.length < 50 && lastFilm != null && lastFilm != '', stars != null && stars != ''){
+        personalMovieDB.movies[lastFilm] = stars;
+    } else {
+        i--;
+    }
+    }
+
+if(numberOfFilms < 10 ){
+    alert("Просмотрено довольно мало фильмов") ;
+}
+else if(10 < numberOfFilms < 30 ){
+    alert("Вы классический зритель");
+}
+else if (numberOfFilms < 30){
+    alert("Вы киноман");
+}
+else{
+    alert("Ошибка");
+}
+
+let y = 0
+// while(y < 2){
+//     lastFilm = prompt('Один из последних просмотренных фильмов?', '');
+//     stars = +prompt('На сколько оцените его?', 'От 1 до 10');
+//     y++;
+//     if(lastFilm != null && stars !=null && stars != '' && lastFilm !='' &&lastFilm.length < 50){
+//         personalMovieDB.movies[lastFilm] = stars;
+//     }else{
+//         alert("error");
+//         y--;
+//     }
+// }
+
+
+function showMyDB() {
+    if(personalMovieDB.privat == false){
+        console.log(personalMovieDB);
+    }
+}
+
+showMyDB();
+
+function writeYourGenres() {
+for(let i = 0; i < 3 ; i++ ){
+    let genre = prompt(`Ваш любимый жанр под номером ${i+1}`);
+    personalMovieDB.genres[i] = genre;
+}
+}
+
+writeYourGenres();
